@@ -81,8 +81,8 @@ app.post("/checkout", async (req, res, next) => {
             quantity: item.quantity
           })),
           mode: "payment",
-          success_url: `${process.env.baseURL}/success.html`,
-          cancel_url: `${process.env.baseURL}/cancel.html`,
+          success_url: `https://angularecommerceapp.netlify.app/success.html`,
+          cancel_url: `https://angularecommerceapp.netlify.app/cancel.html`,
         });
         res.status(200).json(session);
     } catch (error) {
@@ -97,7 +97,7 @@ app.all('/*', function(req, res) {
 
 var opn = require('opn');
 
-opn(`${process.env.baseURL}`).then(() => {
+opn(`https://angularecommerceapp.netlify.app`).then(() => {
   console.log('Browser closed.');
 });
 
