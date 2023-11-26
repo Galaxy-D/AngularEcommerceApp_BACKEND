@@ -15,8 +15,6 @@ dotenv.config({ path: '.env' });
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-console.log('process.env.BASE_URL ==> ',process.env);
-
 app.post("/checkout", async (req, res, next) => {
 
   console.table(req.body.items);
@@ -83,8 +81,8 @@ app.post("/checkout", async (req, res, next) => {
             quantity: item.quantity
           })),
           mode: "payment",
-          success_url: `${process.env.BASE_URL}/success.html`,
-          cancel_url: `${process.env.BASE_URL}/cancel.html`,
+          success_url: `${process.env.baseURL}/success.html`,
+          cancel_url: `${process.env.baseURL}/cancel.html`,
         });
         res.status(200).json(session);
     } catch (error) {
@@ -99,7 +97,7 @@ app.all('/*', function(req, res) {
 
 var opn = require('opn');
 
-opn(`${process.env.BASE_URL}`).then(() => {
+opn(`${process.env.baseURL}`).then(() => {
   console.log('Browser closed.');
 });
 
