@@ -11,15 +11,6 @@ app.use(bodyparser.json());
 
 app.use(cors({ origin: true, credentials: true }));
 
-//CORS
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Credentials", true);
-//   res.header("Access-Control-Allow-Headers", "Origin, Authorization, X-Requested-With, X-XSRF-TOKEN, X-InlineCount, Content-Type, Accept");
-//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
-//   next();
-// });
-
 dotenv.config({ path: '.env' });
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
@@ -90,8 +81,8 @@ app.post("/checkout", async (req, res, next) => {
             quantity: item.quantity
           })),
           mode: "payment",
-          success_url: `https://angularecommerceapp-backend.onrender.com/success.html`,
-          cancel_url: `https://angularecommerceapp-backend.onrender.com/cancel.html`,
+          success_url: `${process.env.SERVER_URL}/success.html`,
+          cancel_url: `${process.env.SERVER_URL}/cancel.html`,
         });
         res.status(200).json(session);
     } catch (error) {
@@ -106,7 +97,7 @@ app.all('/*', function(req, res) {
 
 var opn = require('opn');
 
-opn(`https://angularecommerceapp.netlify.app`).then(() => {
+opn(process.env.CLIENT_URL).then(() => {
   console.log('Browser closed.');
 });
 
