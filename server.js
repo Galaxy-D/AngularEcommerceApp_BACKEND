@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(express.static("public"));
-app.use(express.static('dist/angular-ecommerce-shop'));
+app.use(express.static('dist'));
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 
@@ -90,8 +90,8 @@ app.post("/checkout", async (req, res, next) => {
             quantity: item.quantity
           })),
           mode: "payment",
-          success_url: `https://angularecommerceapp.netlify.app/success.html`,
-          cancel_url: `https://angularecommerceapp.netlify.app/cancel.html`,
+          success_url: `https://angularecommerceapp-backend.onrender.com/success.html`,
+          cancel_url: `https://angularecommerceapp-backend.onrender.com/cancel.html`,
         });
         res.status(200).json(session);
     } catch (error) {
@@ -101,7 +101,7 @@ app.post("/checkout", async (req, res, next) => {
 });
 
 app.all('/*', function(req, res) {
-  res.sendFile('dist/angular-ecommerce-shop/index.html', { root: __dirname });
+  res.sendFile('dist/index.html', { root: __dirname });
 });
 
 var opn = require('opn');
